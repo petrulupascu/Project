@@ -1,0 +1,139 @@
+\documentclass[a4paper,11pt,oneside]{article}
+
+% To use this template, you have to have a halfway complete LaTeX
+% installation and you have to run pdflatex, followed by bibtex,
+% following by one-two more pdflatex runs.
+%
+% Note thad usimg a spel chequer (e.g. ispell, aspell) is generolz
+% a very guud ideo.
+
+\usepackage[a4paper,top=3cm,bottom=3cm,left=3cm,right=3cm]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{helvet}
+\usepackage{parskip}		%% blank lines between paragraphs, no indent
+\usepackage[pdftex]{graphicx}	%% include graphics, preferrably pdf
+\usepackage[pdftex]{hyperref}	%% many PDF options can be set here
+\usepackage{subfigure}
+\usepackage{amsmath}
+\pdfadjustspacing=1		%% force LaTeX-like character spacing
+
+\newcommand{\myname}{Petru Lupascu}
+\newcommand{\mytitle}{Screen Content Coding with VP9}
+\newcommand{\mysupervisor}{Prof. Dr.-Ing Werner Henkel}
+
+\hypersetup{
+  pdfauthor = {\myname},
+  pdftitle = {\mytitle},
+  pdfkeywords = {},
+  colorlinks = {true},
+  linkcolor = {blue}
+}
+
+\begin{document}
+  \pagenumbering{roman}
+
+  \thispagestyle{empty}
+
+  \begin{flushright}
+    %%\includegraphics[scale=0.7]{bsc-logo}
+  \end{flushright}
+  \vspace{20mm}
+  \begin{center}
+    \huge
+    \textbf{\mytitle}
+  \end{center}
+  \vspace*{4mm}
+  \begin{center}
+   \Large by
+  \end{center}
+  \vspace*{4mm}
+  \begin{center}
+    \Large
+    \textbf{\myname}
+  \end{center}
+  \vspace*{20mm}
+  \begin{center}
+    \large
+    Bachelor Thesis in Electrical and Computer Engineering
+  \end{center}
+  \vfill
+  \begin{flushright}
+    \large
+    \begin{tabular}{l}
+      \mysupervisor \\
+      \hline
+      Name and title of the supervisor \\
+      \\
+    \end{tabular}
+  \end{flushright}
+  \vspace*{8mm}
+  \begin{flushleft}
+    \large
+    Date of Submission: July 7th, 2016 \\
+    \rule{\textwidth}{1pt}
+  \end{flushleft}
+  \begin{center}
+    \Large Jacobs University --- School of Engineering and Science
+  \end{center}
+
+  \newpage
+  \thispagestyle{empty}
+
+  With my signature, I certify that this thesis has been written by me
+  using only the indicates resources and materials. Where I have
+  presented data and results, the data and results are complete,
+  genuine, and have been obtained by me unless otherwise acknowledged;
+  where my results derive from computer programs, these computer
+  programs have been written by me unless otherwise acknowledged. I
+  further confirm that this thesis has not been submitted, either in
+  part or as a whole, for any other academic degree at this or another
+  institution.
+
+  \vspace{20mm}
+
+  Signature \hfill Place, Date
+
+  \newpage
+%  \section*{Abstract}
+  \begin{abstract}
+ 
+  
+  \end{abstract}
+
+  \newpage
+  \tableofcontents
+
+  \clearpage
+  \pagenumbering{arabic}
+
+
+  \newpage
+  \listoffigures
+  \newpage
+
+  
+  \section{Introduction}
+
+
+  \newpage
+
+  \section{Background and literature review}
+  
+  \section{Implementation}
+  \section{Results and Evaluation}
+  
+  
+  \section{Conclusion}
+
+
+  \newpage
+
+  \section*{Acknowledgements}
+  
+  I would like to express my sincere gratitude to my thesis supervisor Prof. Werner Henkel for all the guidance and support throughout the research process and for providing me with all the necessary facilities and equipment. I am also very thankful to Mr. Uwe Pagel for all his technical support and expertise and for his help with extra required materials. Lastly, I am grateful to my parents, Sokol Shyti and Ermira Shyti, and brother, Arbi Shyti, for all their encouragement along the journey and for proofreading my thesis.  
+
+  \newpage
+  \bibliographystyle{unsrt}
+  \bibliography{BSc_Thesis-Etta_SHYTI}
+
+\end{document}

@@ -15,11 +15,15 @@
 \usepackage[pdftex]{hyperref}	%% many PDF options can be set here
 \usepackage{subfigure}
 \usepackage{amsmath}
+\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
+
+\addbibresource{ref.bib}
 \pdfadjustspacing=1		%% force LaTeX-like character spacing
 
 \newcommand{\myname}{Petru Lupascu}
 \newcommand{\mytitle}{Screen Content Coding with VP9}
 \newcommand{\mysupervisor}{Prof. Dr.-Ing Werner Henkel}
+\newcommand{\myssupervisor}{SA Steffen Schulze}
 
 \hypersetup{
   pdfauthor = {\myname},
@@ -60,9 +64,9 @@
   \begin{flushright}
     \large
     \begin{tabular}{l}
-      \mysupervisor \\
+      \mysupervisor and \myssupervisor \\
       \hline
-      Name and title of the supervisor \\
+      Name and title of the supervisors \\
       \\
     \end{tabular}
   \end{flushright}
@@ -126,8 +130,7 @@
   have gone a massive progress, modern codecs being able to code Video Signals as low as 9 Mbits/s for HDV format. A newer generation codec targets 
   to achieve the same performance as the previous generation one at the half bitrate. This is done at the expensive of increasing complexity. Most of coding
   techniques require hardware implementations for optimized performance which makes standartization essential to ensure compatibility with as large amount of devices 
-  as possible.
-  
+  as possible.\cite{stcodec}
     %LMI software codec 
     %need to optimize it for screen sharing
     %show issue with artifacts
@@ -157,13 +160,13 @@
 
 
   \newpage
+  \section*{Bibliography}
+  \printbibliography
 
+  \newpage
   \section*{Acknowledgements}
   
   I would like to express my sincere gratitude to my thesis supervisor Prof. Werner Henkel for all the guidance and support throughout the research process and for providing me with all the necessary facilities and equipment. I am also very thankful to Mr. Uwe Pagel for all his technical support and expertise and for his help with extra required materials. Lastly, I am grateful to my parents, Sokol Shyti and Ermira Shyti, and brother, Arbi Shyti, for all their encouragement along the journey and for proofreading my thesis.  
 
-  \newpage
-  \bibliographystyle{unsrt}
-  \bibliography{BSc_Thesis-Etta_SHYTI}
 
 \end{document}

@@ -15,9 +15,8 @@
 \usepackage[pdftex]{hyperref}	%% many PDF options can be set here
 \usepackage{subfigure}
 \usepackage{amsmath}
-\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
 
-\addbibresource{ref.bib}
+%\usepackage[backend=bibtex,style=verbose-trad2]{biblatex}
 \pdfadjustspacing=1		%% force LaTeX-like character spacing
 
 \newcommand{\myname}{Petru Lupascu}
@@ -122,6 +121,15 @@
 
   \section{Introduction}
   %backstory
+  \indent 
+  An Image is a projection of a 3-D scene, characterized by depth, texture and ilumination, onto a 2-D plane characterized by texture and ilumination 
+  without depth information\cite[p.~5]{richardson2002video}. It may be defined as a 2 dimensional signal $ f(x, y) $, where $x$ and $y$ are spatial 
+  coordinates and $f$ is the intensity at that point, when $x$, $y$ and $f$ are finite we call this image a digital image \cite[p.~1]{gonzalez2008digital}. 
+  Therefore, a Video represents a sequence of images over a period of time and can be defined as $f(x,y,t)$, where $x$, $y$, $f$ are spatial and intensity values 
+  and $t$ is the time.\\
+
+
+
   \indent From the yearly days of digital television, video compression techniques gained incresed attention, mainly due to bandwidth always being 
   an expensive asset. Throughout the years, video coding techniques played a vital role in reducing the size of the video sequences without significant
   alteration of its quality. In paralel with advamcement in computer performance, video coding allowed for services such as video telephone and digital 
@@ -130,7 +138,7 @@
   have gone a massive progress, modern codecs being able to code Video Signals as low as 9 Mbits/s for HDV format. A newer generation codec targets 
   to achieve the same performance as the previous generation one at the half bitrate. This is done at the expensive of increasing complexity. Most of coding
   techniques require hardware implementations for optimized performance which makes standartization essential to ensure compatibility with as large amount of devices 
-  as possible.\cite{stcodec}
+  as possible.\cite{ghanbari2011standard}
     %LMI software codec 
     %need to optimize it for screen sharing
     %show issue with artifacts
@@ -161,7 +169,10 @@
 
   \newpage
   \section*{Bibliography}
-  \printbibliography
+
+  \bibliography{project_references}
+  \bibliographystyle{plain}
+
 
   \newpage
   \section*{Acknowledgements}

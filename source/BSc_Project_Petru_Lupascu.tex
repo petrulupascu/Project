@@ -16,7 +16,8 @@
 \usepackage{subfigure}
 \usepackage{amsmath}
 
-%\usepackage[backend=bibtex,style=verbose-trad2]{biblatex}
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{project_references.bib}  
 \pdfadjustspacing=1		%% force LaTeX-like character spacing
 
 \newcommand{\myname}{Petru Lupascu}
@@ -121,9 +122,8 @@
 
   \section{Introduction}
   %backstory
-  \indent 
-  An Image is a projection of a 3-D scene, characterized by depth, texture and ilumination, onto a 2-D plane characterized by texture and ilumination 
-  without depth information\cite[p.~5]{richardson2002video}. It may be defined as a 2 dimensional signal $ f(x, y) $, where $x$ and $y$ are spatial 
+  \indent An Image is a projection of a 3-D scene, characterized by depth, texture and ilumination, onto a 2-D plane characterized by texture and ilumination 
+  without depth information \cite[p.~5]{richardson2002video}. It may be defined as a 2 dimensional signal $ f(x, y) $, where $x$ and $y$ are spatial 
   coordinates and $f$ is the intensity at that point, when $x$, $y$ and $f$ are finite we call this image a digital image \cite[p.~1]{gonzalez2008digital}. 
   Therefore, a Video represents a sequence of images over a period of time and can be defined as $f(x,y,t)$, where $x$, $y$, $f$ are spatial and intensity values 
   and $t$ is the time.\\
@@ -139,6 +139,7 @@
   to achieve the same performance as the previous generation one at the half bitrate. This is done at the expensive of increasing complexity. Most of coding
   techniques require hardware implementations for optimized performance which makes standartization essential to ensure compatibility with as large amount of devices 
   as possible.\cite{ghanbari2011standard}
+  
     %LMI software codec 
     %need to optimize it for screen sharing
     %show issue with artifacts
@@ -169,9 +170,7 @@
 
   \newpage
   \section*{Bibliography}
-
-  \bibliography{project_references}
-  \bibliographystyle{plain}
+  \printbibliography
 
 
   \newpage

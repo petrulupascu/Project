@@ -16,3 +16,4 @@ samples/
 *.fdb_latexmk
 *.fls
 *.run.xml
+*.gz

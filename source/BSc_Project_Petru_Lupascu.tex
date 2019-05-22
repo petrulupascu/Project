@@ -23,7 +23,7 @@
 \newcommand{\myname}{Petru Lupascu}
 \newcommand{\mytitle}{Screen Content Coding with VP9}
 \newcommand{\mysupervisor}{Prof. Dr.-Ing Werner Henkel}
-\newcommand{\myssupervisor}{SA Steffen Schulze}
+\newcommand{\myssupervisor}{Steffen Schulze(LMI)}
 
 \hypersetup{
   pdfauthor = {\myname},
@@ -64,7 +64,8 @@
   \begin{flushright}
     \large
     \begin{tabular}{l}
-      \mysupervisor and \myssupervisor \\
+      \mysupervisor\\
+      \myssupervisor\\
       \hline
       Name and title of the supervisors \\
       \\
@@ -108,9 +109,10 @@
 
   
   \clearpage
+  \fi
+
   \pagenumbering{arabic}
 
-  \fi
 
   \newpage
   \tableofcontents
@@ -122,15 +124,24 @@
 
   \section{Introduction}
   %backstory
-  \indent An Image is a projection of a 3-D scene, characterized by depth, texture and ilumination, onto a 2-D plane characterized by texture and ilumination 
+  \indent An Image is a projection of a 3-D scene, characterized by depth, texture and illumination, onto a 2-D plane characterized by texture and illumination 
   without depth information \cite[p.~5]{richardson2002video}. It may be defined as a 2 dimensional signal $ f(x, y) $, where $x$ and $y$ are spatial 
-  coordinates and $f$ is the intensity at that point, when $x$, $y$ and $f$ are finite we call this image a digital image \cite[p.~1]{gonzalez2008digital}. 
+  coordinates and $f$ is the intensity at that point, when $x$, $y$ and $f$ are finite we call this image a Digital Image \cite[p.~1]{gonzalez2008digital}. 
   Therefore, a Video represents a sequence of images over a period of time and can be defined as $f(x,y,t)$, where $x$, $y$, $f$ are spatial and intensity values 
-  and $t$ is the time.\\
+  and $t$ is the time. For the sake of simplicity we will call the two dimensional point a pixel and its intensity pixel value and each image in a video sequence frame. 
+  Furthermore, an image can be characterized in terms of its resolution and colour format, for the video, additionally there is length. The resolution
+  commonly describes the amount of pixels present in the image, for example: 740x480. The colour format represents a typical arrangemnt of colours in an image such as Grayscale
+  where the pixels value represents the light intensity information, commonly 0 to 255 for an 8 bit image. Another important colopur format is the RGB, where image is divided 
+  into thee subplanes, each representing the intensity of the Red, Green and Blue light components, for common use cases 8 bits per for each subspace pixel, 24 in total are sufficient.
+  Generally, all the parameters mentioned depend on the particular application. However, in most of cases, the ammount of data required to store or transmit a video or an image
+  tend to be very large. A two-hour 720x480x24 bits per frame movie, displayed at 30 frames per second must be accessed at $ 31,104,000 \frac{bytes}{s}$ and would require roughly $224 GB$
+  of data. \cite[p.~525-526]{gonzalez2008digital}
+
+  
 
 
 
-  \indent From the yearly days of digital television, video compression techniques gained incresed attention, mainly due to bandwidth always being 
+  \indent From the yearly days of digital television, video compression techniques gained increased attention, mainly due to bandwidth always being 
   an expensive asset. Throughout the years, video coding techniques played a vital role in reducing the size of the video sequences without significant
   alteration of its quality. In paralel with advamcement in computer performance, video coding allowed for services such as video telephone and digital 
   televesion to be more accesible, which in turn increased the demand. As a consequence, the developement of video coding techniques was incentivised. 
@@ -139,7 +150,7 @@
   to achieve the same performance as the previous generation one at the half bitrate. This is done at the expensive of increasing complexity. Most of coding
   techniques require hardware implementations for optimized performance which makes standartization essential to ensure compatibility with as large amount of devices 
   as possible.\cite{ghanbari2011standard}
-  
+
     %LMI software codec 
     %need to optimize it for screen sharing
     %show issue with artifacts

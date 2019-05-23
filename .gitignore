@@ -6,9 +6,8 @@ samples/
 *.lof
 *.log
 *.out
-*.pdf
+references/*.pdf
 *.toc
-
 *.bbl
 *.bcf
 *.blg
@@ -17,3 +16,4 @@ samples/
 *.fls
 *.run.xml
 *.gz
+BSc_Project_Petru_Lupascu-blx.bib

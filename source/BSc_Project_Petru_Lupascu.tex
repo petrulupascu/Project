@@ -126,12 +126,12 @@
 %backstory
 \indent From the yearly days of digital television, video compression techniques gained increased attention, mainly due to bandwidth always being
 an expensive asset, fact which is relevant. Throughout the years, video coding techniques played a vital role in reducing the size of the video sequences without significant
-alteration of its quality. In paralel with advamcement in computer performance, video coding allowed for services such as video telephone and digital
-televesion to be more accesible, which in turn increased the demand. As a consequence, the developement of video coding techniques was incentivised.
-Straight Forward Pulse Code Modulation(PCM) was one of the first antepmts on coding video signals at around 140 Mbits/s. Since then video coding
+alteration of its quality. In parallel with advancement in computer performance, video coding allowed for services such as video telephone and digital
+television to be more accessible, which in turn increased the demand. As a consequence, the development of video coding techniques was incentivised.
+Straight Forward Pulse Code Modulation(PCM) was one of the first attempt on coding video signals at around 140 Mbits/s. Since then video coding
 have gone a massive progress, modern codecs being able to code Video Signals as low as 9 Mbits/s for HDV format. A newer generation codec targets
-to achieve the same performance as the previous generation one at the half bitrate. This is done at the expensive of increasing complexity. Most of coding
-techniques require hardware implementations for optimized performance which makes standartization essential to ensure compatibility with as large amount of devices
+to achieve the same performance as the previous generation one at the half bit rate. This is done at the expensive of increasing complexity. Most of coding
+techniques require hardware implementations for optimized performance which makes standardization essential to ensure compatibility with as large amount of devices
 as possible.\cite{ghanbari2011standard}\\
 \indent An Image is a projection of a 3-D scene, characterized by depth, texture and illumination, onto a 2-D plane characterized by texture and illumination
 without depth information \cite[p.~5]{richardson2002video}. It may be defined as a 2 dimensional signal $ f(x, y) $, where $x$ and $y$ are spatial
@@ -140,23 +140,23 @@ Therefore, a Video represents a sequence of images over a period of time and can
 and $t$ is the time.
 For the sake of simplicity we will call the two dimensional point a pixel and its intensity pixel value and each image in a video sequence frame.
 Furthermore, an image can be characterized in terms of its resolution and colour format, for the video, additionally there is length. The resolution
-commonly describes the amount of pixels present in the image, for example: 740x480. The colour format represents a typical arrangemnt of colours in an image such as Grayscale
+commonly describes the amount of pixels present in the image, for example: 740x480. The colour format represents a typical arrangement of colours in an image such as Grayscale
 where the pixels value represents the light intensity(luminance) information, commonly 0 to 255 for an 8 bit image. Other important colour formats are the YUV and RGB, where the
-iamge is divided into three subplanes containing luminance, red chrominance and blue chrominance values for YUV and Red, Green and Blue colour intesity values for RGB. Usually 8
-bits values per subplane pixel   are used. Generally, all the parameters mentioned depend on the particular application. However, in most of cases, the ammount of data required to
+image is divided into three sub planes containing luminance, red chrominance and blue chrominance values for YUV and Red, Green and Blue colour intensity values for RGB. Usually 8
+bits values per sub plane pixel   are used. Generally, all the parameters mentioned depend on the particular application. However, in most of cases, the amount of data required to
 store or transmit a video or an image tend to be very large. A two-hour Standard Definition(SD) 720x480x24 bits per frame movie, displayed at 30 frames per second must be accessed
 at $ 31,104,000 $ bytes/sec
 and would require roughly $224 GB$ of data and it gets much larger in case of High Definition (HD) videos where the resolution is 1920x1080x24 \cite[p.~525-526]{gonzalez2008digital} \\
-\indent It is clear that storing video data in it's raw form is extremely inefficient, deeming a compression scheme necessary. Such a compression scheme is commonly refered as a codec.
+\indent It is clear that storing video data in it's raw form is extremely inefficient, deeming a compression scheme necessary. Such a compression scheme is commonly referred as a codec.
 Due to the fact that a video tends to have both high spacial redundancy across a frame and temporal redundancy across multiple frames. A group of neighbouring pixels tends to have
-the same or similar pixel intensity values and can be present in multiple frames across a video sequence. This allows the compression scheme to be optimized beyound typical source coding
-schemes such as Arithmetic Coding. Therefore, a video codec will efficiently decorelate a video in atempt to remove spacial and temporal redundancies and then perform entropy coding.\\
+the same or similar pixel intensity values and can be present in multiple frames across a video sequence. This allows the compression scheme to be optimized beyond typical source coding
+schemes such as Arithmetic Coding. Therefore, a video codec will efficiently decorelate a video in attempt to remove spacial and temporal redundancies and then perform entropy coding.\\
 
 \begin{figure}
   \centering
   %\input{../figures/}
   \includegraphics[width=\textwidth]{../figures/f1_codec_block_diagram.pdf}
-  \caption{Typicall encoder-eecoder block diagram\cite[p.~44]{richardson2002video}}
+  \caption{Typical encoder-decoder block diagram\cite[p.~44]{richardson2002video}}
   \label{figure:codec_block_diagram}
 \end{figure}
 

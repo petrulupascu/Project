@@ -15,6 +15,7 @@
 \usepackage[pdftex]{hyperref}	%% many PDF options can be set here
 \usepackage{subfigure}
 \usepackage{amsmath}
+\usepackage{subfig}
 
 \usepackage[backend=biber,style=ieee]{biblatex}
 \addbibresource{project_references.bib}  
@@ -155,25 +156,15 @@ the same or similar pixel intensity values and can be present in multiple frames
 schemes such as Arithmetic Coding. Therefore, a video codec will efficiently decorelate a video in attempt to remove spacial and temporal redundancies and then perform entropy coding.\\
 
 \indent %As it can be seen in the Figure ~\ref{figure:codec_block_diagram} a video codec can compress a frame in two modes, intra-frame or inter-frame coding. 
-Since a video is just a sequence of frames one might want to compress each frame indvidually by decorelating the image by aplying a 2-D Transform such as Karhunen-Loeve transform(KLT) to blocks
-of the image. KLT has the nice property that it's coeffictionts are decorelated and the energy of the block is packed into the minimal amount of coeffictionts. However it is computationally 
-inefficient since the functions required to out the transform must be calculated in advance and transmitted to the decode, rendering its use impractical. Another transform that performs nearly 
-as well as the KLT, but is much more conputationally efficient, is the on Discrete Cosine Transform (DCT). The DCT represents a discrete signal in terms of a sum of cosines of different frequencies
-and the energy is concentrated at the few top left coeffictionts.
+Since a video is just a sequence of frames one might want to compress each frame individually by decorrelating the image by applying a 2-D Transform such as Karhunen-Loeve transform(KLT) to sub blocks of the image. KLT has the nice property that it's coefficients are decorrelated and the energy of the block is packed into the minimal amount of coefficients. However it is computationally inefficient since the functions required to out the transform must be calculated in advance and transmitted to the decode, rendering its use impractical. Another transform that performs nearly as well as the KLT, but is much more efficient, is the on Discrete Cosine Transform (DCT). The DCT represents a discrete signal in terms of a sum of cosines of different frequencies and the energy is concentrated at the few top left coefficients. \\
 
 \begin{figure}
-  \centering
-  %\input{../figures/}
-  \begin{flushleft}
-    \includegraphics[scale = 0.4]{../figures/16x16_sample_image.pdf}
-  \end{flushleft}
-
-  \begin{flushright}
-    \includegraphics[scale = 0.41]{../figures/16x16_sample_DCT.pdf}
-  \end{flushright}
-
-  \caption{Typical video codec block diagram\cite[p.~44]{richardson2002video}}
-  \label{figure:DCT}
+    \centering
+    \subfloat[]{{\includegraphics[width=6cm]{../figures/16x16_sample_image.pdf} }}
+    \qquad
+    \subfloat[]{{\includegraphics[width=7cm]{../figures/16x16_sample_DCT.pdf} }}
+    \caption{A 16x16 sample(a) image and it's DCT coefficients(b) \cite[p.~35]{richardson2002video}}
+    \label{figure:DCTexample}
 \end{figure}
 
 

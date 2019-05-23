@@ -133,6 +133,7 @@ have gone a massive progress, modern codecs being able to code Video Signals as 
 to achieve the same performance as the previous generation one at the half bit rate. This is done at the expensive of increasing complexity. Most of coding
 techniques require hardware implementations for optimized performance which makes standardization essential to ensure compatibility with as large amount of devices
 as possible.\cite{ghanbari2011standard}\\
+%image and video signal definition and characteristics
 \indent An Image is a projection of a 3-D scene, characterized by depth, texture and illumination, onto a 2-D plane characterized by texture and illumination
 without depth information \cite[p.~5]{richardson2002video}. It may be defined as a 2 dimensional signal $ f(x, y) $, where $x$ and $y$ are spatial
 coordinates and $f$ is the intensity at that point, when $x$, $y$ and $f$ are finite we call this image a Digital Image \cite[p.~1]{gonzalez2008digital}.
@@ -147,19 +148,42 @@ bits values per sub plane pixel   are used. Generally, all the parameters mentio
 store or transmit a video or an image tend to be very large. A two-hour Standard Definition(SD) 720x480x24 bits per frame movie, displayed at 30 frames per second must be accessed
 at $ 31,104,000 $ bytes/sec
 and would require roughly $224 GB$ of data and it gets much larger in case of High Definition (HD) videos where the resolution is 1920x1080x24 \cite[p.~525-526]{gonzalez2008digital} \\
+%intro to codec definition
 \indent It is clear that storing video data in it's raw form is extremely inefficient, deeming a compression scheme necessary. Such a compression scheme is commonly referred as a codec.
 Due to the fact that a video tends to have both high spacial redundancy across a frame and temporal redundancy across multiple frames. A group of neighbouring pixels tends to have
 the same or similar pixel intensity values and can be present in multiple frames across a video sequence. This allows the compression scheme to be optimized beyond typical source coding
 schemes such as Arithmetic Coding. Therefore, a video codec will efficiently decorelate a video in attempt to remove spacial and temporal redundancies and then perform entropy coding.\\
 
+\indent %As it can be seen in the Figure ~\ref{figure:codec_block_diagram} a video codec can compress a frame in two modes, intra-frame or inter-frame coding. 
+Since a video is just a sequence of frames one might want to compress each frame indvidually by decorelating the image by aplying a 2-D Transform such as Karhunen-Loeve transform(KLT) to blocks
+of the image. KLT has the nice property that it's coeffictionts are decorelated and the energy of the block is packed into the minimal amount of coeffictionts. However it is computationally 
+inefficient since the functions required to out the transform must be calculated in advance and transmitted to the decode, rendering its use impractical. Another transform that performs nearly 
+as well as the KLT, but is much more conputationally efficient, is the on Discrete Cosine Transform (DCT). The DCT represents a discrete signal in terms of a sum of cosines of different frequencies
+and the energy is concentrated at the few top left coeffictionts.
+
+\begin{figure}
+  \centering
+  %\input{../figures/}
+  \begin{flushleft}
+    \includegraphics[scale = 0.4]{../figures/16x16_sample_image.pdf}
+  \end{flushleft}
+
+  \begin{flushright}
+    \includegraphics[scale = 0.41]{../figures/16x16_sample_DCT.pdf}
+  \end{flushright}
+
+  \caption{Typical video codec block diagram\cite[p.~44]{richardson2002video}}
+  \label{figure:DCT}
+\end{figure}
+
+
 \begin{figure}
   \centering
   %\input{../figures/}
   \includegraphics[width=\textwidth]{../figures/f1_codec_block_diagram.pdf}
-  \caption{Typical encoder-decoder block diagram\cite[p.~44]{richardson2002video}}
+  \caption{Typical video codec block diagram\cite[p.~44]{richardson2002video}}
   \label{figure:codec_block_diagram}
 \end{figure}
-
 
 
 

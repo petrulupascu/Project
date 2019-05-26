@@ -138,7 +138,11 @@ have gone a massive progress, modern codecs being able to code Video Signals as 
 to achieve the same performance as the previous generation one at the half bit rate. This is done at the expensive of increasing complexity. Most of coding
 techniques require hardware implementations for optimized performance which makes standardization essential to ensure compatibility with as large amount of devices
 as possible.\cite{ghanbari2011standard}\\
+\indent Such standards were throughout the years developed by two groups, the Video Coding Experts Group(VCEG), known for H26x family of codecs and Moving Picture Experts Group(MPEG) for MPEG-X family of codecs. A codec would be licensed to software developers and hardware manufacturers. Starting mid two thousands open source and royalty free coding standards started to be developed and gained popularity, effectively competing with the standard families mentioned above. Some of the most popular ones being the VPx family, developed by Google and On2 Technologies. \\
+\indent Due to the good performance and open source nature of VPx codec family, companies, such as LogMeIn started incorporating them in their Video Conferencing software, by implementing software-based codecs. 
+\newpage
 %image and video signal definition and characteristics
+\section{Background and literature review}
 \indent An Image is a projection of a 3-D scene, characterized by depth, texture and illumination, onto a 2-D plane characterized by texture and illumination
 without depth information \cite[p.~5]{richardson2002video}. It may be defined as a 2 dimensional signal $ f(x, y) $, where $x$ and $y$ are spatial
 coordinates and $f$ is the intensity at that point, when $x$, $y$ and $f$ are finite we call this image a Digital Image \cite[p.~1]{gonzalez2008digital}.
@@ -178,7 +182,7 @@ coefficients, representing a discrete signal in terms of a sum of cosines of dif
 \end{wrapfigure}
 The non-zero quantized coefficients are being grouped together by the scanning through the block in a zigzag sequence [Figure \ref{figure:zigzag_scan}], since non-zero coefficients are concentrated at the top left. Such scanning would represent the image as short runs of non-zero values followed by a long runs of zero valued coefficients and might be efficiently´represented as pairs by performing Run-Length encoding. Furthermore to represent the frequently occurring runs with shorter codes a type of entropy encoding, such as Huffman or Arithmetic coding, is applied. Ignoring the quantization step would allow a decoder to perfectly recover the original image at the expense of a lower compression, called as well Lossless-compression, while with quantization some of the high frequency information would be irreversibly lost, lossy-compression, but allowing higher compression rates to be achieved. \\ 
 \indent The sequence of Transforming, Quantizing, Run-Length and Entropy encoding represents a typical image compression scheme, which would attempt to remove the spacial redundancies in a digital image. Using the DCT as the transform of choice and with additional pre-processing steps such as color space conversions and down-sampling, this image codec is well known under the name JPEG which was standardized in 1992 and could achieve a 10:1 compression ratio \cite{jpeg_nasa}. \\
-
+\indent As a result, decent compression ratios can be achieved by encoding each video frame with an image codec. 
 
 
 

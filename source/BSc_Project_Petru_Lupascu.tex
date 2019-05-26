@@ -139,7 +139,7 @@ to achieve the same performance as the previous generation one at the half bit r
 techniques require hardware implementations for optimized performance which makes standardization essential to ensure compatibility with as large amount of devices
 as possible.\cite{ghanbari2011standard}\\
 \indent Such standards were throughout the years developed by two groups, the Video Coding Experts Group(VCEG), known for H26x family of codecs and Moving Picture Experts Group(MPEG) for MPEG-X family of codecs. A codec would be licensed to software developers and hardware manufacturers. Starting mid two thousands open source and royalty free coding standards started to be developed and gained popularity, effectively competing with the standard families mentioned above. Some of the most popular ones being the VPx family, developed by Google and On2 Technologies. \\
-\indent Due to the good performance and open source nature of VPx codec family, companies, such as LogMeIn started incorporating them in their Video Conferencing software, by implementing software-based codecs. 
+\indent Due to the good performance and open source nature of VPx codec family, companies, such as LogMeIn started incorporating them in their Video Conferencing software, by implementing software-based codecs. Curently, LogMeIn uses a software-based codec to to encode and decode screen content of online conferences. The codec performs compression of a screen content video stream prior of sending the stream over the internet as well as decompression of the screen content video stream on receiver side. Going forward, the current software-based video codec should be replaced by a modern real-time video codec, such as VP9. VP9 was designed around ordinary video use cases, webcam and movie video content. Libvpx, VP9’s software implementation, also focuses on these use cases with some enhancements regarding animations. Thus, in this thesis am investigating the capabilities of VP9 to encode screen content properly, outlined by evaluating the codec in terms of Bitrate, PSNR, CPU-requirements etc., evaluate VP9 with screen and regular content, uncover its weak areas and propose solutions to optimize them.   
 \newpage
 %image and video signal definition and characteristics
 \section{Background and literature review}
@@ -162,7 +162,6 @@ and would require roughly $224 GB$ of data and it gets much larger in case of Hi
 Due to the fact that a video tends to have both high spacial redundancy across a frame and temporal redundancy across multiple frames. A group of neighbouring pixels tends to have
 the same or similar pixel intensity values and can be present in multiple frames across a video sequence. This allows the compression scheme to be optimized beyond typical source coding
 schemes such as Arithmetic Coding. Therefore, a video codec will efficiently decorelate a video in attempt to remove spacial and temporal redundancies and then perform entropy coding.\\
-\newpage
 \indent %As it can be seen in the Figure ~\ref{figure:codec_block_diagram} a video codec can compress a frame in two modes, intra-frame or inter-frame coding. 
 Since a video is just a sequence of frames one might want to compress each frame individually by decorrelating the image by applying a 2-D Transform such as Karhunen-Loeve transform(KLT) to sub blocks of the image. KLT has the nice property that it's coefficients are decorrelated and the energy of the block is packed into the minimal amount of coefficients. However it is computationally inefficient since the functions required to compute the transform must be calculated in advance and transmitted to the decoder, rendering its use impractical. Another transform that performs nearly as well as the KLT, but is much more efficient, is the on Discrete Cosine Transform (DCT). The DCT, is a transform similar to the DFT but with real
 coefficients, representing a discrete signal in terms of a sum of cosines of different frequencies with the energy concentrated at the few top left coefficients which represent the low frequencies while the higher frequencies components are sparse, with most of the values being close to $0$ as it is illustrated in the Figure \ref{figure:DCTexample}.
@@ -176,13 +175,13 @@ coefficients, representing a discrete signal in terms of a sum of cosines of dif
 \end{figure} \\
 \indent Due to the orthonormality of the transformation, the energy in both image domain and DCT domain is the same, hence no compression is achieved. At the same time due to the energy being concentrated on the low frequency allows for Quantization of the image without significant loss in quality. Furthermore, the human visual cortex is less sensitive to distortions at the high frequencies. Therefore, applying a coarser quntization step, would pass unnoticed by the human eye while improving the compression rate. \\
 \begin{wrapfigure}{r}{0.5\textwidth}
-    \includegraphics[height=0.23\textwidth]{../figures/zigzag_reorder_QDCT.pdf}
+    \includegraphics[width=0.5\textwidth]{../figures/zigzag_reorder_QDCT.pdf}
     \caption{Zigzag scan of Quantized DCT coefficients}
     \label{figure:zigzag_scan}
 \end{wrapfigure}
 The non-zero quantized coefficients are being grouped together by the scanning through the block in a zigzag sequence [Figure \ref{figure:zigzag_scan}], since non-zero coefficients are concentrated at the top left. Such scanning would represent the image as short runs of non-zero values followed by a long runs of zero valued coefficients and might be efficiently´represented as pairs by performing Run-Length encoding. Furthermore to represent the frequently occurring runs with shorter codes a type of entropy encoding, such as Huffman or Arithmetic coding, is applied. Ignoring the quantization step would allow a decoder to perfectly recover the original image at the expense of a lower compression, called as well Lossless-compression, while with quantization some of the high frequency information would be irreversibly lost, lossy-compression, but allowing higher compression rates to be achieved. \\ 
 \indent The sequence of Transforming, Quantizing, Run-Length and Entropy encoding represents a typical image compression scheme, which would attempt to remove the spacial redundancies in a digital image. Using the DCT as the transform of choice and with additional pre-processing steps such as color space conversions and down-sampling, this image codec is well known under the name JPEG which was standardized in 1992 and could achieve a 10:1 compression ratio \cite{jpeg_nasa}. \\
-\indent As a result, decent compression ratios can be achieved by encoding each video frame with an image codec. 
+\indent As a result, decent compression ratios can be achieved by encoding each video frame with an image codec. However, better compression results can be achieved by exploiting the temporal redundancy as well. This is commonly done by means of Motion Estimation and Compensation. 
 
 
 
@@ -235,7 +234,6 @@ The non-zero quantized coefficients are being grouped together by the scanning t
 \newpage
 \section*{Acknowledgements}
 
-I would like to express my sincere gratitude to my thesis supervisor Prof. Werner Henkel for all the guidance and support throughout the research process and for providing me with all the necessary facilities and equipment. I am also very thankful to Mr. Uwe Pagel for all his technical support and expertise and for his help with extra required materials. Lastly, I am grateful to my parents, Sokol Shyti and Ermira Shyti, and brother, Arbi Shyti, for all their encouragement along the journey and for proofreading my thesis.
 
 
 \end{document}

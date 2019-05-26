@@ -1,4 +1,4 @@
 # Project
 bsc-project
 find pdf in source folder
-if not there, import and compile in overleaf
+if not there it can be imported and compiled in overleaf, or locally.

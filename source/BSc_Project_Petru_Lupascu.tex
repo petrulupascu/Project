@@ -63,7 +63,7 @@
 \vspace*{20mm}
 \begin{center}
   \large
-  Bachelor Thesis in Electrical and Computer Engineering
+  Bachelor Project for the Thesis in Electrical and Computer Engineering
 \end{center}
 \vfill
 \begin{flushright}
@@ -79,7 +79,7 @@
 \vspace*{8mm}
 \begin{flushleft}
   \large
-  Date of Submission: May 28th, 2019 \\
+  Date of Submission:tbd \\
   \rule{\textwidth}{1pt}
 \end{flushleft}
 \begin{center}
@@ -178,14 +178,13 @@ coefficients, representing a discrete signal in terms of a sum of cosines of dif
 \indent Due to the orthonormality of the transformation, the energy in both image domain and DCT domain is the same, hence no compression is achieved. At the same time due to the energy being concentrated on the low frequency allows for Quantization of the image without significant loss in quality. Furthermore, the human visual cortex is less sensitive to distortions at the high frequencies. Therefore, applying a coarser quntization step, would pass unnoticed by the human eye while improving the compression rate. \\
 \begin{wrapfigure}{r}{0.5\textwidth}
     \includegraphics[width=0.5\textwidth]{../figures/zigzag_reorder_QDCT.pdf}
-    \caption{Zigzag scan of Quantized DCT coefficients}
+    \caption{Zigzag scan of Quantized DCT coefficients \cite[p.40]{richardson2002video}}
     \label{figure:zigzag_scan}
 \end{wrapfigure}
 The non-zero quantized coefficients are being grouped together by the scanning through the block in a zigzag sequence [Figure \ref{figure:zigzag_scan}], since non-zero coefficients are concentrated at the top left. Such scanning would represent the image as short runs of non-zero values followed by a long runs of zero valued coefficients and might be efficiently´represented as pairs by performing Run-Length encoding. Furthermore to represent the frequently occurring runs with shorter codes a type of entropy encoding, such as Huffman or Arithmetic coding, is applied. Ignoring the quantization step would allow a decoder to perfectly recover the original image at the expense of a lower compression, called as well Lossless-compression, while with quantization some of the high frequency information would be irreversibly lost, lossy-compression, but allowing higher compression rates to be achieved. \\ 
 \indent The sequence of Transforming, Quantizing, Run-Length and Entropy encoding represents a typical image compression scheme, which would attempt to remove the spacial redundancies in a digital image. Using the DCT as the transform of choice and with additional pre-processing steps such as color space conversions and down-sampling, this image codec is well known under the name JPEG which was standardized in 1992 and could achieve a 10:1 compression ratio \cite{jpeg_nasa}. \\
 \section{Video Codec}
 \indent As a result, decent compression ratios can be achieved by encoding each video frame with an image codec. However, better compression results can be achieved by exploiting the temporal redundancy as well. This is commonly done by means of frame prediction from previous samples and transmitting the prediction error to the output. Modern Video Compression systems involve more complex ways of predicting a frame by making use of motion estimation, where a region of current frame is compared with neighbouring regions of reconstructed frame in attempt to find the best match of the neighbouring block in the reference frame that gives the smallest residual block, and motion compensation, which subtracts the matched block from the current region \cite[p.~44]{richardson2002video}. In order for the Decoder to reconstruct the frame from the residual, the motion vectors, the location of the matched blocks, has to be transmitted to the decoder, which implies that the decoder is a part of the encoder in a video coding scheme. Figure \ref{figure:codec_block_diagram} represents the typical Video Codec and it clearly illustrates the decoder as being a part of the encoder. \\
-
 \begin{figure}[h]
   \centering
   %\input{../figures/}
@@ -193,40 +192,23 @@ The non-zero quantized coefficients are being grouped together by the scanning t
   \caption{Typical video codec block diagram\cite[p.~44]{richardson2002video}}
   \label{figure:codec_block_diagram}
 \end{figure} \\
-A video codec usually encodes the first frame without any prediction ,transmits it to the decoder and stores it for future frame predictions, such a frame is called an Intra-Frame and it is used to kick starts the prediction of the further frames. After the Intra-Frame, the encoder predicts the further frames and transmits only the residual error to the decoder. Furthermore, the frame prediction can be done from future frames, called bidirectional prediction, this howeevr does does not change the general stricutre of a video codec. The choice of which frames are Intra and which frames are Inter coded is up to the particular standard and coding scheme w.r.t. the trade off between quality and achieved compression. For example, MPEG-2, encodes the 1st frame as Intra-Frame, which is being used to predict the 4th frame, both of which are used to predict the 2nd and third frames as it's displayed in Figure \ref{figure:mpeg2_frame_sequence} \\ 
+A video codec usually encodes the first frame without any prediction ,transmits it to the decoder and stores it for future frame predictions, such a frame is called an Intra-Frame and it is used to kick starts the prediction of the further frames. After the Intra-Frame, the encoder predicts the further frames and transmits only the residual error to the decoder. Furthermore, the frame prediction can be done from future frames, called bidirectional prediction, this however does does not change the general structure of a video codec. The choice of which frames are Intra and which frames are Inter coded is up to the particular standard and coding scheme w.r.t. the trade off between quality and achieved compression. For example, MPEG-2, encodes the 1st frame as Intra-Frame, which is being used to predict the 4th frame, both of which are used to predict the 2nd and third frames as it's displayed in Figure \ref{figure:mpeg2_frame_sequence}. Such an encoding scheme is called Hybrid Motion Compensated Video Encoding.\\ 
 \begin{figure}[h]
   \centering
   %\input{../figures/}
-  \includegraphics[width=0.8\textwidth]{../figures/frame_sequence_mpeg2.pdf}
+  \includegraphics[width=0.4\textwidth]{../figures/frame_sequence_mpeg2.pdf}
   \caption{MPEG2 frame sequence \cite[p.98]{dsp_henkel}}
   \label{figure:mpeg2_frame_sequence}
 \end{figure} \\
-
-
-
-%LMI software codec 
-%need to optimize it for screen sharing
-%show issue with artifacts
-\newpage
-\section{Background and literature review}
-%define a video codec
-
-%list the most popular, aka. history
-
-%software versus hardware codecs in mass communications
-
-%vp9
-
-%how does it work
-
-%compare vp9 out of the box against H family
-
+\indent Aside from the blocks mentioned above a video frame must be preprocessed. Generally, preprocessing consists in choosing a coding profile, which specifies the quality of the encoded video specifying the color format, since the Human Visual Cortex is more sensible to changes in the luminance than colour, the red and green colours spaces of the YUV format might be sub sampled, for example, for each 4 luminance pixels only 2 chrominance pixels(one red and one green) are taken into account. Aside from the pixel format, the frame gets partitioned into tiles and blocks of various sizes which are then fed into the encoder. %add figure of block partitioning 
+\indent In a standardized Video Codec, the decoding process is the one that is fixed in order to ensure the compatibility across a broad range of use cases. Therefore the encoding process must comply but can be further optimized.  \cite{vsp_coursera} 
+\subsection{VP9 coding standard}
+VP9 is a modern Bandwidth-efficient video coding standard which was initially released by Google on the 17th of June 2013. It is a Hybrid Motion Compensated Video codec following it's general structure. 
+\subsection{Screen Content Coding}
 %define screene content
 %why it's special
 
-% go back to the issue
-%why the issue is important
-%the plan for research
+%the issue
 
 
 
@@ -235,11 +217,5 @@ A video codec usually encodes the first frame without any prediction ,transmits 
 \newpage
 \section*{Bibliography}
 \printbibliography
-
-
-\newpage
-\section*{Acknowledgements}
-
-
 
 \end{document}

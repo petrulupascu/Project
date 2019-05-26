@@ -143,6 +143,7 @@ as possible.\cite{ghanbari2011standard}\\
 \newpage
 %image and video signal definition and characteristics
 \section{Background and literature review}
+\subsection{Digital Image and Video Signals}
 \indent An Image is a projection of a 3-D scene, characterized by depth, texture and illumination, onto a 2-D plane characterized by texture and illumination
 without depth information \cite[p.~5]{richardson2002video}. It may be defined as a 2 dimensional signal $ f(x, y) $, where $x$ and $y$ are spatial
 coordinates and $f$ is the intensity at that point, when $x$, $y$ and $f$ are finite we call this image a Digital Image \cite[p.~1]{gonzalez2008digital}.
@@ -158,6 +159,7 @@ store or transmit a video or an image tend to be very large. A two-hour Standard
 at $ 31,104,000 $ bytes/sec
 and would require roughly $224 GB$ of data and it gets much larger in case of High Definition (HD) videos where the resolution is 1920x1080x24 \cite[p.~525-526]{gonzalez2008digital} \\
 %intro to codec definition
+\subsection{Image Codec}
 \indent It is clear that storing video data in it's raw form is extremely inefficient, deeming a compression scheme necessary. Such a compression scheme is commonly referred as a codec.
 Due to the fact that a video tends to have both high spacial redundancy across a frame and temporal redundancy across multiple frames. A group of neighbouring pixels tends to have
 the same or similar pixel intensity values and can be present in multiple frames across a video sequence. This allows the compression scheme to be optimized beyond typical source coding
@@ -181,12 +183,8 @@ coefficients, representing a discrete signal in terms of a sum of cosines of dif
 \end{wrapfigure}
 The non-zero quantized coefficients are being grouped together by the scanning through the block in a zigzag sequence [Figure \ref{figure:zigzag_scan}], since non-zero coefficients are concentrated at the top left. Such scanning would represent the image as short runs of non-zero values followed by a long runs of zero valued coefficients and might be efficiently´represented as pairs by performing Run-Length encoding. Furthermore to represent the frequently occurring runs with shorter codes a type of entropy encoding, such as Huffman or Arithmetic coding, is applied. Ignoring the quantization step would allow a decoder to perfectly recover the original image at the expense of a lower compression, called as well Lossless-compression, while with quantization some of the high frequency information would be irreversibly lost, lossy-compression, but allowing higher compression rates to be achieved. \\ 
 \indent The sequence of Transforming, Quantizing, Run-Length and Entropy encoding represents a typical image compression scheme, which would attempt to remove the spacial redundancies in a digital image. Using the DCT as the transform of choice and with additional pre-processing steps such as color space conversions and down-sampling, this image codec is well known under the name JPEG which was standardized in 1992 and could achieve a 10:1 compression ratio \cite{jpeg_nasa}. \\
-\indent As a result, decent compression ratios can be achieved by encoding each video frame with an image codec. However, better compression results can be achieved by exploiting the temporal redundancy as well. This is commonly done by means of Motion Estimation and Compensation. 
-
-
-
-
-
+\section{Video Codec}
+\indent As a result, decent compression ratios can be achieved by encoding each video frame with an image codec. However, better compression results can be achieved by exploiting the temporal redundancy as well. This is commonly done by means of frame prediction from previous samples and transmitting the prediction error to the output. Modern Video Compression systems involve more complex ways of predicting a frame by making use of motion estimation, where a region of current frame is compared with neighbouring regions of reconstructed frame in attempt to find the best match of the neighbouring block in the reference frame that gives the smallest residual block, and motion compensation, which subtracts the matched block from the current region \cite[p.~44]{richardson2002video}. In order for the Decoder to reconstruct the frame from the residual, the motion vectors, the location of the matched blocks, has to be transmitted to the decoder, which implies that the decoder is a part of the encoder in a video coding scheme. Figure \ref{figure:codec_block_diagram} represents the typical Video Codec and it clearly illustrates the decoder as being a part of the encoder. \\
 
 \begin{figure}[h]
   \centering
@@ -194,7 +192,15 @@ The non-zero quantized coefficients are being grouped together by the scanning t
   \includegraphics[width=\textwidth]{../figures/f1_codec_block_diagram.pdf}
   \caption{Typical video codec block diagram\cite[p.~44]{richardson2002video}}
   \label{figure:codec_block_diagram}
-\end{figure}
+\end{figure} \\
+A video codec usually encodes the first frame without any prediction ,transmits it to the decoder and stores it for future frame predictions, such a frame is called an Intra-Frame and it is used to kick starts the prediction of the further frames. After the Intra-Frame, the encoder predicts the further frames and transmits only the residual error to the decoder. Furthermore, the frame prediction can be done from future frames, called bidirectional prediction, this howeevr does does not change the general stricutre of a video codec. The choice of which frames are Intra and which frames are Inter coded is up to the particular standard and coding scheme w.r.t. the trade off between quality and achieved compression. For example, MPEG-2, encodes the 1st frame as Intra-Frame, which is being used to predict the 4th frame, both of which are used to predict the 2nd and third frames as it's displayed in Figure \ref{figure:mpeg2_frame_sequence} \\ 
+\begin{figure}[h]
+  \centering
+  %\input{../figures/}
+  \includegraphics[width=0.8\textwidth]{../figures/frame_sequence_mpeg2.pdf}
+  \caption{MPEG2 frame sequence \cite[p.98]{dsp_henkel}}
+  \label{figure:mpeg2_frame_sequence}
+\end{figure} \\
 
 
 

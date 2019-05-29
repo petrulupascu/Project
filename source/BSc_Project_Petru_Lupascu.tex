@@ -179,7 +179,7 @@ achieved by exploiting the temporal redundancy alongside the spatial Redundancy.
 previous sample frames and transmitting the prediction error to the output. Due to the relative similarity of the neighbouring frames, the
 frame difference will contain much less information. Modern video compression systems involve more complex ways of predicting a frame by making
 use of motion estimation and compensation techniques. \\
-\indent Motion estimation is a way of changing a frame that has already been decoded and stored as a reference frame, in order to match the current frame as close as possible. This can be achieved by matching blocks from the reference frame to blocks of the current frame, done by measuring the Mean Square Error (MSE) between the blocks. After the best match is found, it is subtracted from the current frame to produce the residual blocks and alongside the motion vectors are encoded and transmitted to the decoder. Motion Vectors represent the 2-D offset of the matched region relative to the block position in the current frame. Transmitting the residual frame alongside motion vectors is commonly called inter-frame coding. \\
+\indent Motion estimation is a way of changing a frame that has already been decoded and stored as a reference frame, in order to match the current frame as close as possible. This can be achieved by matching blocks from the reference frame to blocks of the current frame, done by measuring the Mean Square Error (MSE) between the blocks. After the best match is found, it is subtracted from the current frame to produce the residual blocks and alongside the motion vectors are encoded and transmitted to the decoder. Motion Vectors (MV) represent the 2-D offset of the matched region relative to the block position in the current frame. Transmitting the residual frame alongside MV is commonly called inter-frame coding. \\
 \begin{figure}[h]
     \centering  
     \includegraphics[width=0.5\textwidth]{../figures/motion_vectors.pdf}
@@ -219,27 +219,54 @@ Newer Codecs use sub-pixel motion estimation by performing block-matching with s
   \caption{MPEG2 frame sequence \cite[pp.98]{dsp_henkel}}
   \label{figure:mpeg2_frame_sequence}
 \end{figure} \\
-\indent At the decoder side, the first intra-frame is entropy decoded, inverse quantized, transformed, intra motion compensated if that is the case, and stored as a reference for for the motion compensation. Further frames arrive as residuals and motion vectors and must be reconstructed by means of inter-prediction. One can clearly observe that this process replicates the image decoding and prediction at the decoder with exception of motion vectors, which don't need to be found, consequently showing that the decoder is a part of the encoder as it can be seen in Figure \ref{figure:codec_block_diagram}.
+\indent At the decoder side, the first intra-frame is entropy decoded, inverse quantized, transformed, intra motion compensated if that is the case, and stored as a reference for for the motion compensation. Further frames arrive as residuals and MV and must be reconstructed by means of inter-prediction. One can clearly observe that this process replicates the image decoding and prediction at the decoder with exception of MV, which don't need to be found, consequently showing that the decoder is a part of the encoder as it can be seen in Figure \ref{figure:codec_block_diagram}.
 \indent In a standardized Video Codec, only the bit-stream and the decoding process in order to ensure compatibility across a broad range of devices and applications. The actual encoder and decoder are not fixed and can be implemented process is not fixed and can be changed as long as the output bit-stream complies with the standard \cite{vsp_coursera}.
 
 \subsection{VP9 coding standard}
 VP9 is a modern bandwidth-efficient video coding standard which was initially released by Google on the 17th of June 2013. It is a Hybrid Motion Compensated Video codec following the structure mentioned above. \\
 \indent The standard provides 4 coding profiles, numbered 0 to 3. Profiles 0 and 1 allows only 8 bits per color are allowed while 2 and 3 allow 10-12 bits per sample. Profiles 0 and 2 require the chroma pixels sub-sampled in the 4:2:0 format while the other two allow for for other formats\cite[pp.~23]{vp9_bitstream}.\\
-\indent The frame is partitioned in tiles which contain 64x64 super-blocks which can be partitioned in sub-blocks of power 2 size down to 4x4 as shown in Figure \ref{figure:vp9_block_partitioning}.
+\indent The frame is partitioned in tiles of length 256 to 4096 pixels, which contain 64x64 super-blocks which can be partitioned in sub-blocks of power 2 size down to 4x4 as shown in Figure \ref{figure:vp9_block_partitioning}.
 \begin{figure}[h]
   \centering
   %\input{../figures/}
-  \includegraphics[width=0.5\textwidth]{../figures/frame_partitioning.pdf}
+  \includegraphics[width=0.8\textwidth]{../figures/frame_partitioning.pdf}
   \caption{VP9 block partitioning \cite[pp.~15]{vp9_bitstream}}
   \label{figure:vp9_block_partitioning}
 \end{figure} \\
-\indent The standard specifies 3 2-D transforms of sizes 32x32, 16x16, 8x8 and 4x4. The transforms are DCT, Asynchronous Discrete Sine Transform (ADST) and Walsh–Hadamard transform. The choice of a block size usually implies the transform size, unless lossless-compression is performed. In such a case, all transform blocks are 4x4 Walsh–Hadamard. For the intra-mode, the pixel values near the top and left edges are predicted better than the ones further to the bottom right. The errors are concentrated on that side. ADST maximizes the energy at the unknown boundaries making it more fit for those kind of shapes. The DCT respectively is applied to the residuals in inter-mode \cite[pp.~16]{vp9_bitstream}. The implementation of the transforms is left to the particular user. The standard however provides structures for the inverse DCT and ADST. 2-D IDCT and IADST are executed by performing one-dimensional inverse transform on the block rows followed by the column of the intermediate results from the row transforms. \cite[pp.~18-19]{vp9_bitstream}. \\
-The transform coefficients are quantized with a constant quantization factor. It is defined at the frame level and used for all subsequent blocks. 
+\indent After it is encoded, a frame is sent to the stream in the following sequence. \\
+\begin{figure}[h]
+  \centering
+  %\input{../figures/}
+  \includegraphics[width=\textwidth]{../figures/vp9_bitstream.pdf}
+  \caption{Frame structure \cite[pp.~25]{vp9_bitstream}}
+  \label{figure:vp9_frame}
+\end{figure} \\
+The uncompressed header contains raw binary encoded information about the coding profile, frame size, loop filter strength and other parameters. \\
+The compressed header, arithmetically coded follows with information regarding transforms, probabilities used for entropy decoding.\\
+Compressed frame data follow with information necessary to reconstruct the frame, such as block partition sizes, motion vectors, prediction modes and transform coefficients.\\
+\indent The standard specifies three 2-D transforms of sizes 32x32, 16x16, 8x8 and 4x4. The transforms are DCT, Asynchronous Discrete Sine Transform (ADST) and Walsh–Hadamard transform. The choice of a block size usually implies the transform size, unless lossless-compression is performed. In such a case, only 4x4 block sizes, and 4x4 Walsh-Hadamard transform are allowed. For the intra-mode, the pixel values near the top and left edges are predicted better than the ones further to the bottom right. The errors are concentrated on that side. ADST maximizes the energy at the unknown boundaries making it more fit for those kind of shapes. The DCT respectively is applied to the residuals in inter-mode \cite[pp.~16]{vp9_bitstream}. The implementation of the transforms is left to the particular user. The standard however provides structures for the inverse DCT and ADST. 2-D IDCT and IADST are executed by performing one-dimensional inverse transform on the block rows followed by the column of the intermediate results from the row transforms. \cite[pp.~18-19]{vp9_bitstream}. \\
+\indent The transform coefficients are quantized with a constant quantization factor, defined for the entire frame. If there is no inverse quantization, VP9 is performing lossless-compression.
+\indent As entropy coder, VP9 uses an arithmetic scheme called Boolean-coder, it codes a one boolean value at a time given the probability of the value, if the probability leans much more towards one side than the other, the respective value can be coded using less than 1 bit per boolean value. The probability model is fixed for the entire frame and it is known when the frame starts to be decoded. \cite[pp.~77]{vp9_bitstream}\\
+\indent Regarding frame prediction, VP9 specifies 10 different prediction modes for intra-frame prediction, listed in Figure \ref{figure:vp9_intra_modes}.\\
+\begin{figure}[h]
+  \centering
+  %\input{../figures/}
+  \includegraphics[width=0.5\textwidth]{../figures/intra-mods.pdf}
+  \caption{VP9 intra-frame prediction modes \cite[pp.~71]{vp9_bitstream}}
+  \label{figure:vp9_intra_modes}
+\end{figure} \\
+The prediction modes 0 to 3, are explained in Figure \ref{figure:intra-coding}. \\
+Aside from intra-frame prediction, VP9 specifies inter-frame prediction by making use motion compensation with up to 1/8th pixel accuracy. A block can be matched by using either one or two references, with one or two MV respectively. If two reference frames are used, the process is called compound prediction, the block being matched by averaging the two MV. The choice of compound prediction can be done at frame or block levels. Due to similarities in motion, more blocks can share the same MV. VP9 exploits that by predicting the MV by looking the the neighbouring blocks, followed by a temporal predictor, which estimates the MV from the previous frame. If no MV has been found, we search the neighbouring area again but are not trying to get a perfect match. The process stops when two MV are found, the first one is the nearest MV while the second one in near MV. As a result, 4 types of MV modes are possible: new MV from encoder, nearest, near or zero MV if no vector is going to be used. \cite[pp.~20]{vp9_bitstream}. For good inter-frame prediction, VP9 stores up to 8 frames as references when doing motion estimation and compensation. \\
+\indent Lastly, the codec specifies a loop filter in order to combat the blocking artifacts. It operates per super-block processing them in raster order across the whole frame. The filter is characterized by filter level and sharpness  which determine when a block edge has to be smoothed. Loop filtering is the last part of processing the frame before it is either stored as a reference or sent to the display.\\
 
-
-
-\indent As entropy coder, VP9 uses an arithmetic coding engine called Bool-coder, with the probability model stored for the whole frame.\\
-
+\begin{figure}[h]
+  \centering
+  %\input{../figures/}
+  \includegraphics[width=\textwidth]{../figures/vp9_decoder(1).pdf}
+  \caption{VP9 model decoder}
+  \label{figure:vp9_decoder}
+\end{figure} 
+\clearpage
 \subsection{Screen Content Coding}
 %define screene content
 
